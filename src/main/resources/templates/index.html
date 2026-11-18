@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | DompetKu</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">D</div>
+                <span>DompetKu</span>
+            </div>
+
+            <p class="menu-label">MENU UTAMA</p>
+
+            <nav>
+                <a th:href="@{/}" class="nav-link active">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a th:href="@{/transactions}" class="nav-link">
+                    <span>↔</span> Transaksi
+                </a>
+
+                <a th:href="@{/reports}" class="nav-link">
+                    <span>▤</span> Laporan
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="profile">
+                    <div class="avatar"
+                         th:text="${userName != null and !userName.isEmpty() ? #strings.substring(userName, 0, 1).toUpperCase() : 'U'}">
+                        U
+                    </div>
+
+                    <div>
+                        <strong th:text="${userName != null ? userName : 'Pengguna'}">
+                            Pengguna
+                        </strong>
+                        <small>Personal Account</small>
+                    </div>
+                </div>
+
+                <a th:href="@{/logout}" class="nav-link">
+                    <span>↪</span> Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="dashboard">
+
+            <header class="topbar">
+                <div>
+                    <h1>Selamat datang di DompetKu</h1>
+                    <p>
+                        Halo,
+                        <strong th:text="${userName != null ? userName : 'Pengguna'}">
+                            Pengguna
+                        </strong>!
+                        Berikut ringkasan keuangan kamu.
+                    </p>
+                </div>
+            </header>
+
+            <!-- Summary Cards -->
+            <section class="summary">
+
+                <div class="summary-card balance">
+                    <p>Total Saldo</p>
+                    <h2 th:text="'Rp ' + ${#numbers.formatDecimal(balance, 0, 'POINT', 0, 'COMMA')}">
+                        Rp 0
+                    </h2>
+                    <small>Saldo keuangan saat ini</small>
+                </div>
+
+                <div class="summary-card income">
+                    <p>Total Pemasukan</p>
+                    <h2 th:text="'Rp ' + ${#numbers.formatDecimal(totalIncome, 0, 'POINT', 0, 'COMMA')}">
+                        Rp 0
+                    </h2>
+                    <small>↑ Uang yang masuk</small>
+                </div>
+
+                <div class="summary-card expense">
+                    <p>Total Pengeluaran</p>
+                    <h2 th:text="'Rp ' + ${#numbers.formatDecimal(totalExpense, 0, 'POINT', 0, 'COMMA')}">
+                        Rp 0
+                    </h2>
+                    <small>↓ Uang yang keluar</small>
+                </div>
+
+            </section>
+
+            <!-- Grafik Keuangan -->
+            <section class="transaction-section chart-section">
+                <div class="section-heading">
+                    <div>
+                        <h2>Grafik Pemasukan dan Pengeluaran</h2>
+                        <p>Perbandingan total pemasukan dan pengeluaran</p>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="financeChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Transaksi Terbaru -->
+            <section class="transaction-section" id="transactions">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Transaksi Terbaru</h2>
+                        <p>Ringkasan aktivitas keuangan kamu</p>
+                    </div>
+
+                    <a th:href="@{/transactions/new}" class="add-button">
+                        + Tambah Transaksi
+                    </a>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Transaksi</th>
+                                <th>Kategori</th>
+                                <th>Tanggal</th>
+                                <th>Jenis</th>
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="item, status : ${transactions}"
+                                th:if="${status.index < 5}">
+
+                                <td th:text="${item.description}"></td>
+
+                                <td th:text="${item.category}"></td>
+
+                                <td th:text="${#temporals.format(item.transactionDate, 'dd MMM yyyy')}"></td>
+
+                                <td>
+                                    <span th:if="${item.type == 'PEMASUKAN'}"
+                                          class="tag income-tag">
+                                        Pemasukan
+                                    </span>
+
+                                    <span th:if="${item.type == 'PENGELUARAN'}"
+                                          class="tag expense-tag">
+                                        Pengeluaran
+                                    </span>
+                                </td>
+
+                                <td class="amount"
+                                    th:classappend="${item.type == 'PEMASUKAN'} ? ' income-text' : ' expense-text'"
+                                    th:text="${(item.type == 'PEMASUKAN' ? '+ Rp ' : '- Rp ') + #numbers.formatDecimal(item.amount, 0, 'POINT', 0, 'COMMA')}">
+                                </td>
+
+                            </tr>
+
+                            <tr th:if="${#lists.isEmpty(transactions)}">
+                                <td colspan="5" style="text-align: center;">
+                                    Belum ada transaksi.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+            <footer>
+                © 2026 DompetKu. Kelola keuangan dengan lebih mudah.
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Script Grafik -->
+    <script th:inline="javascript">
+        const totalIncome = Number(/*[[${totalIncome}]]*/ 0);
+        const totalExpense = Number(/*[[${totalExpense}]]*/ 0);
+
+        const chartElement = document.getElementById('financeChart');
+
+        new Chart(chartElement, {
+            type: 'bar',
+            data: {
+                labels: ['Pemasukan', 'Pengeluaran'],
+                datasets: [{
+                    label: 'Jumlah Uang (Rp)',
+                    data: [totalIncome, totalExpense],
+                    backgroundColor: [
+                        '#16a34a',
+                        '#ef4444'
+                    ],
+                    borderRadius: 8,
+                    barThickness: 65
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Rp ' + context.raw.toLocaleString('id-ID');
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return 'Rp ' + value.toLocaleString('id-ID');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

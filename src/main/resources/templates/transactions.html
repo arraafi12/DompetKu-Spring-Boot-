@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Transaksi | DompetKu</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">D</div>
+            <span>DompetKu</span>
+        </div>
+
+        <p class="menu-label">MENU UTAMA</p>
+
+        <nav>
+            <a th:href="@{/}" class="nav-link">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a th:href="@{/transactions}" class="nav-link active">
+                <span>↔</span> Transaksi
+            </a>
+
+            <a th:href="@{/reports}" class="nav-link">
+                <span>▤</span> Laporan
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="profile">
+                <div class="avatar">U</div>
+                <div>
+                    <strong>Pengguna</strong>
+                    <small>Personal Account</small>
+                </div>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="topbar">
+            <div>
+                <h1>Kelola dan cari aktivitas keuangan kamu</h1>
+            </div>
+
+            <a th:href="@{/transactions/new}" class="add-button">
+                + Tambah Transaksi
+            </a>
+        </header>
+
+        <!-- SEARCH AND FILTER -->
+        <section class="transaction-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>Pencarian dan Filter</h2>
+                    <p>Temukan transaksi berdasarkan kriteria tertentu.</p>
+                </div>
+            </div>
+
+            <form th:action="@{/transactions}"
+                  method="get"
+                  class="filter-form">
+
+                <!-- PENCARIAN -->
+                <div class="filter-group search-group">
+                    <label for="keyword">Cari Transaksi</label>
+
+                    <input
+                        type="text"
+                        id="keyword"
+                        name="keyword"
+                        placeholder="Cari keterangan atau kategori..."
+                        th:value="${keyword}">
+                </div>
+
+                <!-- FILTER JENIS -->
+                <div class="filter-group">
+                    <label for="type">Jenis Transaksi</label>
+
+                    <select id="type" name="type">
+                        <option value=""
+                                th:selected="${selectedType == null or selectedType == ''}">
+                            Semua Jenis
+                        </option>
+
+                        <option value="PEMASUKAN"
+                                th:selected="${selectedType == 'PEMASUKAN'}">
+                            Pemasukan
+                        </option>
+
+                        <option value="PENGELUARAN"
+                                th:selected="${selectedType == 'PENGELUARAN'}">
+                            Pengeluaran
+                        </option>
+                    </select>
+                </div>
+
+                <!-- FILTER KATEGORI -->
+                <div class="filter-group">
+                    <label for="category">Kategori</label>
+
+                    <select id="category" name="category">
+                        <option value=""
+                                th:selected="${selectedCategory == null or selectedCategory == ''}">
+                            Semua Kategori
+                        </option>
+
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat}"
+                                th:text="${cat}"
+                                th:selected="${selectedCategory == cat}">
+                        </option>
+                    </select>
+                </div>
+
+                <!-- TANGGAL MULAI -->
+                <div class="filter-group">
+                    <label for="startDate">Tanggal Mulai</label>
+
+                    <input
+                        type="date"
+                        id="startDate"
+                        name="startDate"
+                        th:value="${startDate}">
+                </div>
+
+                <!-- TANGGAL AKHIR -->
+                <div class="filter-group">
+                    <label for="endDate">Tanggal Akhir</label>
+
+                    <input
+                        type="date"
+                        id="endDate"
+                        name="endDate"
+                        th:value="${endDate}">
+                </div>
+
+                <!-- TOMBOL -->
+                <div class="filter-actions">
+
+                    <button type="submit" class="save-button">
+                        Cari / Filter
+                    </button>
+
+                    <a th:href="@{/transactions}"
+                       class="cancel-button">
+                        Reset
+                    </a>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- TRANSACTION TABLE -->
+        <section class="transaction-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>Semua Transaksi</h2>
+                    <p>Daftar transaksi sesuai pencarian dan filter.</p>
+                </div>
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Keterangan</th>
+                            <th>Tanggal</th>
+                            <th>Kategori</th>
+                            <th>Jenis</th>
+                            <th>Jumlah</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:each="item : ${transactions}">
+
+                            <td th:text="${item.description}">
+                                Keterangan transaksi
+                            </td>
+
+                            <td th:text="${#temporals.format(item.transactionDate, 'dd MMM yyyy')}">
+                                18 Nov 2026
+                            </td>
+
+                            <td th:text="${item.category}">
+                                Kategori
+                            </td>
+
+                            <td>
+                                <span th:if="${item.type == 'PEMASUKAN'}"
+                                      class="tag income-tag">
+                                    Pemasukan
+                                </span>
+
+                                <span th:if="${item.type == 'PENGELUARAN'}"
+                                      class="tag expense-tag">
+                                    Pengeluaran
+                                </span>
+                            </td>
+
+                            <td class="amount"
+                                th:classappend="${item.type == 'PEMASUKAN'} ? ' income-text' : ' expense-text'"
+                                th:text="${item.type == 'PEMASUKAN' ? '+ Rp ' : '- Rp '} + ${#numbers.formatDecimal(item.amount, 0, 'POINT', 0, 'COMMA')}">
+                                Rp0
+                            </td>
+
+                            <td>
+                                <a th:href="@{/transactions/edit/{id}(id=${item.id})}"
+                                   class="edit-link">
+                                    Edit
+                                </a>
+
+                                <span>|</span>
+
+                                <a th:href="@{/transactions/delete/{id}(id=${item.id})}"
+                                   class="delete-link"
+                                   onclick="return confirm('Yakin ingin menghapus transaksi ini?')">
+                                    Hapus
+                                </a>
+                            </td>
+
+                        </tr>
+
+                        <!-- JIKA DATA KOSONG -->
+                        <tr th:if="${#lists.isEmpty(transactions)}">
+                            <td colspan="6" class="empty-message">
+                                Tidak ada transaksi yang ditemukan.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <footer>
+            © 2026 DompetKu. Kelola keuangan dengan lebih mudah.
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>

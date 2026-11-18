@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupa Email | DompetKu</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+    <main class="auth-page">
+        <section class="auth-card">
+            <a th:href="@{/login}" class="back-link">← Kembali ke Login</a>
+
+            <div class="auth-brand">
+                <div class="brand-icon">D</div>
+                <span>DompetKu</span>
+            </div>
+
+            <div class="auth-heading">
+                <div class="auth-icon">✉</div>
+                <h1>Lupa Email?</h1>
+                <p>Masukkan nama dan nomor telepon yang terdaftar untuk menemukan akunmu.</p>
+            </div>
+
+            <p class="message error" th:if="${error}" th:text="${error}"></p>
+            <p class="message success" th:if="${success}" th:text="${success}"></p>
+
+            <div class="recovery-result" th:if="${recoveredEmail}">
+                <p>Email akun yang ditemukan:</p>
+                <strong th:text="${recoveredEmail}"></strong>
+                <a th:href="@{/login}" class="auth-button">Kembali ke Login</a>
+            </div>
+
+            <form th:action="@{/forgot-email}" method="post"
+                  th:unless="${recoveredEmail}">
+                <div class="form-group">
+                    <label for="name">Nama Lengkap</label>
+                    <input type="text" id="name" name="name"
+                           placeholder="Masukkan nama lengkap" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Nomor Telepon</label>
+                    <input type="tel" id="phone" name="phone"
+                           placeholder="Masukkan nomor telepon terdaftar"
+                           required>
+                </div>
+
+                <button type="submit" class="auth-button">
+                    Cari Email Saya
+                </button>
+            </form>
+
+            <p class="auth-footer">
+                Ingat email kamu?
+                <a th:href="@{/login}">Login sekarang</a>
+            </p>
+        </section>
+    </main>
+</body>
+</html>

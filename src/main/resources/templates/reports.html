@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Keuangan - DompetKu</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2 class="brand">DompetKu</h2>
+
+        <nav>
+            <a th:href="@{/}" class="nav-link">Dashboard</a>
+            <a th:href="@{/transactions}" class="nav-link">Transaksi</a>
+            <a th:href="@{/reports}" class="nav-link active">Laporan Keuangan</a>
+        </nav>
+    </aside>
+
+    <!-- Konten utama -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <div class="topbar">
+            <h1>Laporan Keuangan</h1>
+
+            <button type="button"
+                    class="print-button"
+                    onclick="window.print()">
+                Cetak / Simpan PDF
+            </button>
+        </div>
+
+        <!-- Periode laporan -->
+        <section class="transaction-section period-section">
+
+            <h2>Periode Laporan</h2>
+
+            <!-- Form filter hanya tampil di halaman web -->
+            <form th:action="@{/reports}"
+                  method="get"
+                  class="filter-form no-print">
+
+                <div class="filter-group">
+                    <label for="startDate">Tanggal Mulai</label>
+                    <input type="date"
+                           id="startDate"
+                           name="startDate"
+                           th:value="${startDate}">
+                </div>
+
+                <div class="filter-group">
+                    <label for="endDate">Tanggal Akhir</label>
+                    <input type="date"
+                           id="endDate"
+                           name="endDate"
+                           th:value="${endDate}">
+                </div>
+
+                <div class="filter-actions">
+                    <button type="submit" class="save-button">
+                        Tampilkan Laporan
+                    </button>
+
+                    <a th:href="@{/reports}" class="cancel-button">
+                        Reset
+                    </a>
+                </div>
+
+            </form>
+
+            <!-- Tanggal periode khusus PDF -->
+            <p class="print-period">
+                Periode:
+                <strong th:text="${#temporals.format(startDate, 'dd-MM-yyyy')}"></strong>
+                sampai
+                <strong th:text="${#temporals.format(endDate, 'dd-MM-yyyy')}"></strong>
+            </p>
+
+        </section>
+
+        <!-- Judul ringkasan khusus halaman web -->
+        <section class="report-heading">
+            <h2>Ringkasan Laporan</h2>
+
+            <p>
+                Periode:
+                <strong th:text="${#temporals.format(startDate, 'dd-MM-yyyy')}"></strong>
+                sampai
+                <strong th:text="${#temporals.format(endDate, 'dd-MM-yyyy')}"></strong>
+            </p>
+        </section>
+
+        <!-- Ringkasan laporan -->
+        <section class="summary-cards">
+
+            <div class="summary-card">
+                <h3>Total Pemasukan</h3>
+                <p class="income-text"
+                   th:text="'Rp ' + ${#numbers.formatDecimal(totalIncome, 0, 'POINT', 2, 'COMMA')}">
+                    Rp 0
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Total Pengeluaran</h3>
+                <p class="expense-text"
+                   th:text="'Rp ' + ${#numbers.formatDecimal(totalExpense, 0, 'POINT', 2, 'COMMA')}">
+                    Rp 0
+                </p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Sisa Saldo</h3>
+                <p th:text="'Rp ' + ${#numbers.formatDecimal(balance, 0, 'POINT', 2, 'COMMA')}">
+                    Rp 0
+                </p>
+            </div>
+
+        </section>
+
+        <!-- Tabel transaksi laporan -->
+        <section class="transaction-section">
+
+            <h2>Rincian Transaksi</h2>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Keterangan</th>
+                            <th>Kategori</th>
+                            <th>Jenis</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="item : ${transactions}">
+                            <td th:text="${#temporals.format(item.transactionDate, 'dd-MM-yyyy')}"></td>
+
+                            <td th:text="${item.description}"></td>
+
+                            <td th:text="${item.category}"></td>
+
+                            <td>
+                                <span th:text="${item.type}"
+                                      th:class="${item.type == 'PEMASUKAN'} ? 'income-text' : 'expense-text'">
+                                </span>
+                            </td>
+
+                            <td th:text="'Rp ' + ${#numbers.formatDecimal(item.amount, 0, 'POINT', 2, 'COMMA')}"></td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(transactions)}">
+                            <td colspan="5" class="empty-message">
+                                Tidak ada transaksi pada periode ini.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- Footer laporan -->
+        <div class="report-footer">
+            <p>Dicetak dari aplikasi DompetKu</p>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>
