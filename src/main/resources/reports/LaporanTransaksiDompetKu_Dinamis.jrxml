@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Jaspersoft Studio version 7.0.8.final using JasperReports Library version 7.0.8-6f896111  -->
+<jasperReport name="LaporanTransaksiDompetKu" language="java" columnCount="1" pageWidth="595" pageHeight="842" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="24ac0969-7e3f-488f-89ce-431a2b291792">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<query language="sql"></query>
+	<parameter name="periodeLaporan" class="java.lang.String"/><parameter name="totalIncomeText" class="java.lang.String"/><parameter name="totalExpenseText" class="java.lang.String"/><parameter name="balanceText" class="java.lang.String"/><field name="transactionDate" class="java.time.LocalDate"/><field name="description" class="java.lang.String"/><field name="category" class="java.lang.String"/><field name="type" class="java.lang.String"/><field name="amount" class="java.math.BigDecimal"/><background splitType="Stretch"/>
+	<title height="201" splitType="Stretch">
+		<element kind="staticText" uuid="3e736aac-df94-45d7-8af4-e2a77cdaf022" x="160" y="0" width="240" height="30" fontName="TIMES NEW ROMAN&#13;&#10;" fontSize="20.0" bold="true" hTextAlign="Center">
+			<text>LAPORAN KEUANGAN</text>
+		</element>
+		<element kind="staticText" uuid="59fe3722-8ef1-46cc-bdc8-dbdedbbc554d" x="0" y="45" width="100" height="30" fontName="times new roman&#13;&#10;" fontSize="14.0" vTextAlign="Middle">
+			<text>Periode Laporan</text>
+		</element>
+		<element kind="textField" uuid="766cd902-8aef-4ef0-9b25-986e54f056e1" x="0" y="80" width="100" height="30" fontName="times new roman&#13;&#10;" fontSize="13.0" vTextAlign="Middle">
+			<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+			<expression>$P{periodeLaporan}</expression></element>
+		<element kind="rectangle" uuid="19ffc765-acf3-4848-aa41-3bfccd255c46" x="0" y="130" width="130" height="50">
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="rectangle" uuid="2cf672a0-0f7e-4efd-8b56-7a370a8aef72" x="215" y="130" width="130" height="50">
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="rectangle" uuid="96e2e3b4-9f86-45d8-a1e9-7534b05fd10d" x="420" y="130" width="130" height="50">
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="staticText" uuid="4ac174bd-cd36-4832-853b-5fdc2e209cd8" x="0" y="131" width="90" height="17" fontName="times new roman&#13;&#10;&#13;&#10;" fontSize="12.0" hTextAlign="Center">
+			<text>Total Pemasukan</text>
+		</element>
+		<element kind="staticText" uuid="17fd1284-1a51-4415-8e21-40214d1a6065" x="215" y="130" width="95" height="16" fontName="times new roman&#13;&#10;" fontSize="12.0" hTextAlign="Center">
+			<text>Total Pengeluaran</text>
+		</element>
+		<element kind="staticText" uuid="82e8889f-d2c3-4c14-a96c-49bb904fe70e" x="420" y="130" width="60" height="18" fontName="times new roman&#13;&#10;" fontSize="12.0" hTextAlign="Center">
+			<text>Sisa Saldo</text>
+		</element>
+		<element kind="textField" uuid="08b1ada9-77bc-4b51-a8ef-1c6de0b782c0" x="15" y="152" width="100" height="19" fontName="times new roman&#13;&#10;" fontSize="12.0" hTextAlign="Center" vTextAlign="Middle">
+			<expression>$P{totalIncomeText}</expression></element>
+		<element kind="textField" uuid="1c822f6f-1e00-4967-a9b2-208535bd418e" x="227" y="152" width="100" height="19" fontName="times new roman&#13;&#10;" fontSize="12.0" hTextAlign="Center" vTextAlign="Middle">
+			<expression>$P{totalExpenseText}</expression></element>
+		<element kind="textField" uuid="7e04c33c-7a33-4230-bb57-e478d07a2027" x="435" y="152" width="100" height="18" fontName="times new roman&#13;&#10;" fontSize="12.0" hTextAlign="Center" vTextAlign="Middle">
+			<expression>$P{balanceText}</expression></element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</title>
+	<pageHeader splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</pageHeader>
+	<columnHeader height="37" splitType="Stretch">
+		<element kind="staticText" uuid="0b36e900-b8fc-4d28-95d4-1c64e1409b06" x="0" y="3" width="109" height="30" backcolor="#6D6D70" mode="Transparent" fontName="times new roman&#13;&#10;" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+			<box>
+				<pen lineWidth="1.5" lineStyle="Solid" lineColor="#6D6D70"/>
+			</box>
+			<text>Tanggal</text>
+		</element>
+		<element kind="staticText" uuid="8d085294-6b78-405e-b60f-ad240a0c1e38" x="110" y="3" width="116" height="30" markup="none" fontName="times new roman&#13;&#10;" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<box>
+				<pen lineWidth="1.5" lineStyle="Solid" lineColor="#6D6D70"/>
+			</box>
+			<text>Keterangan</text>
+		</element>
+		<element kind="staticText" uuid="e332b88e-5ca1-4eb3-ac97-1903a1f81032" x="226" y="3" width="118" height="30" markup="none" fontName="times new roman&#13;&#10;" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<box>
+				<pen lineWidth="1.5" lineStyle="Solid" lineColor="#6D6D70"/>
+			</box>
+			<text>Kategori</text>
+		</element>
+		<element kind="staticText" uuid="c9c10f25-d603-4bd1-9d85-afc39400085f" x="344" y="3" width="95" height="30" markup="none" fontName="times new roman&#13;&#10;" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<box>
+				<pen lineWidth="1.5" lineColor="#6D6D70"/>
+			</box>
+			<text>Jenis</text>
+		</element>
+		<element kind="staticText" uuid="c682c8f7-7e14-4c58-b27d-85b37af17aa3" x="439" y="3" width="110" height="30" markup="none" fontName="times new roman&#13;&#10;" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<box>
+				<pen lineWidth="1.5" lineColor="#6D6D70"/>
+			</box>
+			<text>Jumlah</text>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</columnHeader>
+	<detail>
+		<band height="38" splitType="Stretch">
+			<element kind="textField" uuid="7c4c7623-e023-4dae-b987-6fc0489adb5a" x="0" y="3" width="109" height="30" markup="none" fontName="times new roman&#13;&#10;" hTextAlign="Center" vTextAlign="Middle">
+				<box>
+					<pen lineWidth="1.5" lineColor="#6D6D70"/>
+				</box>
+				<expression>18-11-2026</expression>
+			<expression>$F{transactionDate} == null ? "" : $F{transactionDate}.format(java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy"))</expression></element>
+			<element kind="textField" uuid="a31d8eab-1238-4527-87a1-9ee4f1596b02" x="109" y="3" width="116" height="30" fontName="times new roman&#13;&#10;" hTextAlign="Center" vTextAlign="Middle">
+				<box>
+					<pen lineWidth="1.5" lineColor="#6D6D70"/>
+				</box>
+				<expression>"Gaji Pertama"</expression>
+			<expression>$F{description} == null ? "" : $F{description}</expression></element>
+			<element kind="textField" uuid="91427299-697d-487d-af99-6439302681ba" x="225" y="3" width="118" height="30" fontName="times new roman&#13;&#10;" hTextAlign="Center" vTextAlign="Middle">
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="1.5" lineColor="#6D6D70"/>
+				</box>
+				<expression>"Gaji"</expression>
+			<expression>$F{category}</expression></element>
+			<element kind="textField" uuid="b7d96c1b-3b5f-4781-8e6e-b12aa4e03f0a" x="344" y="3" width="95" height="30" fontName="times new roman&#13;&#10;" hTextAlign="Center" vTextAlign="Middle">
+				<box>
+					<pen lineWidth="1.5" lineColor="#6D6D70"/>
+				</box>
+				<expression>"PEMASUKAN"</expression>
+			<expression>$F{type}</expression></element>
+			<element kind="textField" uuid="9cf18622-5d72-48ad-ada2-1c5c92f73e5e" x="439" y="3" width="110" height="30" markup="none" fontName="times new roman&#13;&#10;" hTextAlign="Center" vTextAlign="Middle">
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<box>
+					<pen lineWidth="1.5" lineColor="#6D6D70"/>
+				</box>
+				<expression>600000000</expression>
+			<expression>$F{amount}</expression></element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<columnFooter splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</columnFooter>
+	<pageFooter height="36" splitType="Stretch">
+		<element kind="staticText" uuid="e072b263-ebb2-4e56-9aed-4dcb5552ea70" x="205" y="6" width="143" height="30" markup="none" fontName="times new roman&#13;&#10;" fontSize="9.0" hTextAlign="Center" vTextAlign="Middle">
+			<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+			<text>Dicetak dari aplikasi DompetKu</text>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</pageFooter>
+	<summary splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</summary>
+</jasperReport>

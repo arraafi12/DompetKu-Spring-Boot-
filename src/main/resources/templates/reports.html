@@ -15,7 +15,7 @@
         <h2 class="brand">DompetKu</h2>
 
         <nav>
-            <a th:href="@{/}" class="nav-link">Dashboard</a>
+            <a th:href="@{ / }" class="nav-link">Dashboard</a>
             <a th:href="@{/transactions}" class="nav-link">Transaksi</a>
             <a th:href="@{/reports}" class="nav-link active">Laporan Keuangan</a>
         </nav>
@@ -28,11 +28,12 @@
         <div class="topbar">
             <h1>Laporan Keuangan</h1>
 
-            <button type="button"
-                    class="print-button"
-                    onclick="window.print()">
+            <!-- Tombol mengunduh / membuka PDF JasperReports -->
+            <a th:href="@{/reports/pdf(startDate=${startDate}, endDate=${endDate})}"
+               class="print-button"
+               target="_blank">
                 Cetak / Simpan PDF
-            </button>
+            </a>
         </div>
 
         <!-- Periode laporan -->
@@ -40,7 +41,7 @@
 
             <h2>Periode Laporan</h2>
 
-            <!-- Form filter hanya tampil di halaman web -->
+            <!-- Form filter hanya untuk halaman web -->
             <form th:action="@{/reports}"
                   method="get"
                   class="filter-form no-print">
@@ -73,7 +74,7 @@
 
             </form>
 
-            <!-- Tanggal periode khusus PDF -->
+            <!-- Periode laporan -->
             <p class="print-period">
                 Periode:
                 <strong th:text="${#temporals.format(startDate, 'dd-MM-yyyy')}"></strong>
@@ -83,7 +84,7 @@
 
         </section>
 
-        <!-- Judul ringkasan khusus halaman web -->
+        <!-- Judul ringkasan -->
         <section class="report-heading">
             <h2>Ringkasan Laporan</h2>
 
