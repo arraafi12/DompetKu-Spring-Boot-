@@ -12,24 +12,25 @@
     <main class="auth-page">
         <section class="auth-card">
 
-            <!-- Brand -->
+            <!-- Logo DompetKu -->
             <div class="auth-brand">
-                <div class="brand-icon">D</div>
-                <span>DompetKu</span>
+                <img th:src="@{/images/logo dompetku.png}"
+                     alt="Logo DompetKu"
+                     class="logo-dompetku">
             </div>
 
             <!-- Heading -->
             <div class="auth-heading">
-                <div class="auth-icon">👋</div>
                 <h1>Selamat Datang!</h1>
                 <p>Silakan masuk ke akun DompetKu Anda.</p>
             </div>
 
-            <!-- Pesan Berhasil -->
+            <!-- Pesan Berhasil Registrasi -->
             <p class="message success" th:if="${param.registered}">
                 Registrasi berhasil. Silakan login.
             </p>
 
+            <!-- Pesan Berhasil Reset Password -->
             <p class="message success" th:if="${param.resetSuccess}">
                 Password berhasil diubah. Silakan login dengan password baru.
             </p>
@@ -46,6 +47,7 @@
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email">Alamat Email</label>
+
                     <input
                         type="email"
                         id="email"
@@ -57,13 +59,7 @@
 
                 <!-- Password -->
                 <div class="form-group">
-
-                    <div class="password-label">
-                        <label for="loginPassword">Password</label>
-                        <a th:href="@{/forgot-password}">
-                            Lupa Password?
-                        </a>
-                    </div>
+                    <label for="loginPassword">Password</label>
 
                     <div class="password-wrapper">
                         <input
@@ -78,7 +74,8 @@
                             type="button"
                             class="toggle-password"
                             data-target="loginPassword"
-                            aria-label="Tampilkan password">
+                            aria-label="Tampilkan password"
+                            aria-pressed="false">
 
                             <!-- Ikon Mata Terbuka -->
                             <svg class="eye-open"
@@ -109,12 +106,19 @@
 
             </form>
 
-            <!-- Link Pemulihan -->
+            <!-- Link Pemulihan Email dan Password -->
             <div class="auth-links">
                 <a th:href="@{/forgot-email}">
                     Lupa Email?
                 </a>
+
+                <a th:href="@{/forgot-password}">
+                    Lupa Password?
+                </a>
             </div>
+
+            <!-- Garis Pemisah -->
+            <div class="auth-divider"></div>
 
             <!-- Link Registrasi -->
             <p class="auth-footer">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrasi - DompetKu</title>
+    <title>Registrasi | DompetKu</title>
 
     <link rel="stylesheet" th:href="@{/css/auth.css}">
 </head>
@@ -12,15 +12,15 @@
     <main class="auth-page">
         <section class="auth-card">
 
-            <!-- Brand -->
+            <!-- Logo DompetKu -->
             <div class="auth-brand">
-                <div class="brand-icon">D</div>
-                <span>DompetKu</span>
+                <img th:src="@{/images/logo dompetku.png}"
+                     alt="Logo DompetKu"
+                     class="logo-dompetku">
             </div>
 
             <!-- Heading -->
             <div class="auth-heading">
-                <div class="auth-icon">👋</div>
                 <h1>Buat Akun Baru</h1>
                 <p>Daftarkan akun untuk mulai mengelola keuanganmu.</p>
             </div>
@@ -50,12 +50,12 @@
 
                 <!-- Email -->
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">Alamat Email</label>
                     <input
                         type="email"
                         id="email"
                         th:field="*{email}"
-                        placeholder="Masukkan email"
+                        placeholder="Masukkan alamat email"
                         autocomplete="email"
                         required>
                 </div>
@@ -152,7 +152,7 @@
 
                 <!-- Tombol Daftar -->
                 <button type="submit" class="auth-button">
-                    Daftar
+                    Daftar Sekarang
                 </button>
 
             </form>
